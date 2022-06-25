@@ -6,11 +6,15 @@ public class PlayController : MonoBehaviour
 {
     // ボール
     [SerializeField]
-    private Rigidbody ball;
+    private Ball ball;
 
     // バー
     [SerializeField]
     private Rigidbody bar;
+
+    // ブロックコントローラー
+    [SerializeField]
+    private BlockController blockController;
 
     // ボールの移動量
     [SerializeField]
@@ -26,6 +30,8 @@ public class PlayController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // ボールの初期化
+        ball.OnInit(ballShotValue);
     }
 
     // Update is called once per frame
@@ -35,7 +41,16 @@ public class PlayController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isShot == false)
         {
             isShot = true;
-            ball.velocity = Vector3.up * ballShotValue;
+            ball.SetSpeed(ballShotValue);
+        }
+
+        // Rキーを押したときにリセット
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            // ボールのリセット
+            ball.OnReset();
+            // ブロックのリセット
+            blockController.OnReset();
         }
 
         // バーを移動する

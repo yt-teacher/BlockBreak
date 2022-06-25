@@ -22,7 +22,10 @@ public class BlockController : MonoBehaviour
 
     // 行間
     [SerializeField]
-    private float lowSpace = 1f;
+    private float colSpace = 1f;
+
+    // 生成したブロックを格納リスト(配列)
+    private List<GameObject> blockList = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +33,7 @@ public class BlockController : MonoBehaviour
         // ブロックのサイズを考慮して列/行のスペースを決める
         var blockScale = blockPrefab.transform.localScale;
         blockScale.x += rowSpace;
-        blockScale.y += lowSpace;
+        blockScale.y += colSpace;
 
         // 複数個ブロック作成
         for (var i = 0; i < col; i++)
@@ -42,10 +45,31 @@ public class BlockController : MonoBehaviour
                 var block = Instantiate(blockPrefab, transform).transform;
 
                 // 座標を合わせる
-                block.localPosition = new Vector3(-blockScale.x + blockScale.x * j,
-                                                  -blockScale.y + blockScale.y * i,
+                // BlockContoroller の座標がブロックの初期位置
+                block.localPosition = new Vector3(blockScale.x * j,
+                                                  -blockScale.y * i,
                                                   0f);
+
+                blockList.Add(block.gameObject);
             }
+        }
+    }
+
+    /// <summary>
+    /// リセット処理
+    /// ・消えているブロックの再表示
+    /// </summary>
+    public void OnReset()
+    {
+        for (var i = 0; i < blockList.Count; i++)
+        {
+            // オブジェクトのアクティブがオン(true)の時、
+            // continue 以下の処理は行わない
+            if (blockList[i].activeSelf) continue;
+
+            // アクティブをオン(true)にする
+            // ※画面上に再表示
+            blockList[i].SetActive(true);
         }
     }
 }
