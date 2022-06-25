@@ -1074,7 +1074,7 @@ GameObject:
   - component: {fileID: 2100253446}
   - component: {fileID: 2100253445}
   m_Layer: 0
-  m_Name: BlcokParent
+  m_Name: BlcokController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1092,7 +1092,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 813bbd271bbf40342b11c9d5422fa9f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockPrefab: {fileID: 8757938458010254340, guid: 7588e035d58a76a44a0fddc64a92c57f, type: 3}
+  blockPrefab: {fileID: 1925337878620159111, guid: 5789af6e08f40954680d826f77c07837, type: 3}
+  row: 3
+  col: 3
+  rowSpace: 2
+  lowSpace: 1
 --- !u!4 &2100253446
 Transform:
   m_ObjectHideFlags: 0
