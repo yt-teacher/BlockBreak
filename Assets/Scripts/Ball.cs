@@ -14,6 +14,10 @@ public class Ball : MonoBehaviour
     // 最高速度
     private float maxSpeed;
 
+    // ボールがリセットされる
+    // エリアに来た際に呼ばれる関数(デリゲート)
+    public System.Action TriggerBall;
+
     /// <summary>
     /// 初期化
     /// ・ボールの初期位置
@@ -83,6 +87,27 @@ public class Ball : MonoBehaviour
             // オブジェクトをヒエラルキー上から消す
             // 編集できない/見えないような感じ
             obj.SetActive(false);   // コスト低
+        }
+    }
+
+    /// <summary>
+    /// 物理挙動はしないが、衝突判定を行いたい
+    /// </summary>
+    /// <param name="other"></param>
+    private void OnTriggerEnter(Collider other)
+    {
+        // 衝突したオブジェクトを取得
+        var obj = other?.gameObject;
+
+        // 衝突したオブジェクトのタグが特定のものであれば、
+        // 各自処理をする
+        if (obj != null && obj.tag == "Reset")
+        {
+            // ボールのみをリセット
+            OnReset();
+
+            // この変数に登録された関数を呼び出す
+            TriggerBall?.Invoke();
         }
     }
 }
